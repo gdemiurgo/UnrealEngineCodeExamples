@@ -161,15 +161,18 @@ void APlayerCharacter::DetectorControl(float DeltaTime)
 			{
 				InteractableControl(HitActor);
 				LastHitActor = HitActor;
+				InteractableDetected = true;
 			}
 		}
 		else
 		{
+			InteractableDetected = false;
 			LastHitActor = nullptr;
 		}
 	}
 	else if (LastHitActor != nullptr)
     {
+		InteractableDetected = false;
         LastHitActor = nullptr;
     }
 
@@ -184,17 +187,37 @@ void APlayerCharacter::LightControl(FHitResult HitResult, float DeltaTime)
 
 	if(LineLenght > 0)
 	{
-		float TargetConeAngle = FMath::RadiansToDegrees(FMath::Atan(LightConstantSize / (LineLenght / 2)));
+		float LightSize = LightConstantSize;
+		float ProjectorLightSize = LightProjectorConstantSize;
+		float LightIntensity = DefaultLightIntensity;
+		float ProjectorLightIntensity = DefaultLightProjectorIntensity;
+
+		if(InteractableDetected && LineLenght < Interactable->DetectableDistance)
+		{
+			LightSize = InteractionLightConstantSize;
+			LightIntensity = InteractionLightIntensity;
+			ProjectorLightSize = InteractionLightProjectorConstantSize;
+			ProjectorLightIntensity = InteractionLightProjectorIntensity;
+		}
+
+		//Light control
+		float TargetConeAngle = FMath::RadiansToDegrees(FMath::Atan(LightSize / (LineLenght / 2)));
 		float ConeAngle = FMath::FInterpTo(Light->OuterConeAngle, TargetConeAngle, DeltaTime, LightAngleSpeed);
 
 		Light->SetOuterConeAngle(ConeAngle);
 		Light->SetInnerConeAngle(Light->OuterConeAngle/2);
 
-		float TargetProjectorConeAngle = FMath::RadiansToDegrees(FMath::Atan(LightProjectorConstantSize / (LineLenght / 2)));
-		float ProjectorConeAngle = FMath::FInterpTo(LightProjector->OuterConeAngle, TargetProjectorConeAngle, DeltaTime, LightAngleSpeed);
+		float Intensity = FMath::FInterpTo(Light->Intensity, LightIntensity, DeltaTime, LightAngleSpeed);
+		Light->SetIntensity(Intensity);
 
+		//Projector control
+		float TargetProjectorConeAngle = FMath::RadiansToDegrees(FMath::Atan(ProjectorLightSize / (LineLenght / 2)));
+
+		float ProjectorConeAngle = FMath::FInterpTo(LightProjector->OuterConeAngle, TargetProjectorConeAngle, DeltaTime, LightAngleSpeed);
 		LightProjector->SetOuterConeAngle(ProjectorConeAngle);
-		LightProjector->SetInnerConeAngle(LightProjector->OuterConeAngle/2);
+
+		float ProjectorIntensity = FMath::FInterpTo(LightProjector->Intensity, ProjectorLightIntensity, DeltaTime, LightAngleSpeed);
+		LightProjector->SetIntensity(ProjectorIntensity);
 	}
 }
 

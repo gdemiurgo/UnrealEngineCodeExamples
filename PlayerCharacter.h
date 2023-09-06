@@ -62,9 +62,29 @@ private:
 	float LightConstantSize = 220.0;
 
 	UPROPERTY(EditAnywhere, Category = "Light Control")
+	float InteractionLightConstantSize = 240.0;
+
+	UPROPERTY(EditAnywhere, Category = "Light Control")
+	float DefaultLightIntensity = 0.7;
+
+	UPROPERTY(EditAnywhere, Category = "Light Control")
+	float InteractionLightIntensity = 0.8;
+
+	UPROPERTY(EditAnywhere, Category = "Light Control")
 	float LightProjectorConstantSize;
 
+	UPROPERTY(EditAnywhere, Category = "Light Control")
+	float InteractionLightProjectorConstantSize = 240.0;
+
+	UPROPERTY(EditAnywhere, Category = "Light Control")
+	float DefaultLightProjectorIntensity = 1;
+
+	UPROPERTY(EditAnywhere, Category = "Light Control")
+	float InteractionLightProjectorIntensity = 4;
+
 	class UInteractable* Interactable;
+
+	bool InteractableDetected;
 
 	AActor* LastHitActor = nullptr;
 
