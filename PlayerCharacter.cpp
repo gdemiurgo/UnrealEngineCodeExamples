@@ -196,8 +196,19 @@ void APlayerCharacter::LightControl(FHitResult HitResult, float DeltaTime)
 		{
 			LightSize = InteractionLightConstantSize;
 			LightIntensity = InteractionLightIntensity;
+
+			LightProjector->SetLightColor(FColor::White);
 			ProjectorLightSize = InteractionLightProjectorConstantSize;
 			ProjectorLightIntensity = InteractionLightProjectorIntensity;
+
+			if(LineLenght < Interactable->InteractableDistance)
+			{
+				LightSize = InteractionLightNearSize;
+
+				LightProjector->SetLightColor(LightProjectorNearColor);
+				ProjectorLightSize = InteractionLightProjectorNearSize;
+				ProjectorLightIntensity = LightProjectorNearIntensity;
+			}
 		}
 
 		//Light control

@@ -59,10 +59,10 @@ private:
 	float LightAngleSpeed;
 
 	UPROPERTY(EditAnywhere, Category = "Light Control")
-	float LightConstantSize = 220.0;
+	float LightConstantSize = 200.0;
 
 	UPROPERTY(EditAnywhere, Category = "Light Control")
-	float InteractionLightConstantSize = 240.0;
+	float InteractionLightConstantSize = 210.0;
 
 	UPROPERTY(EditAnywhere, Category = "Light Control")
 	float DefaultLightIntensity = 0.7;
@@ -71,16 +71,28 @@ private:
 	float InteractionLightIntensity = 0.8;
 
 	UPROPERTY(EditAnywhere, Category = "Light Control")
+	float InteractionLightNearSize = 150.0;
+
+	UPROPERTY(EditAnywhere, Category = "Light Control")
 	float LightProjectorConstantSize;
 
 	UPROPERTY(EditAnywhere, Category = "Light Control")
-	float InteractionLightProjectorConstantSize = 240.0;
+	float InteractionLightProjectorConstantSize = 130.0;
 
 	UPROPERTY(EditAnywhere, Category = "Light Control")
-	float DefaultLightProjectorIntensity = 1;
+	float DefaultLightProjectorIntensity = 0;
 
 	UPROPERTY(EditAnywhere, Category = "Light Control")
 	float InteractionLightProjectorIntensity = 4;
+
+	UPROPERTY(EditAnywhere, Category = "Light Control")
+	float InteractionLightProjectorNearSize = 100.0;
+
+	UPROPERTY(EditAnywhere, Category = "Light Control")
+	float LightProjectorNearIntensity = 8;
+
+	UPROPERTY(EditAnywhere, Category = "Light Control")
+	FColor LightProjectorNearColor;
 
 	class UInteractable* Interactable;
 
